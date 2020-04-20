@@ -1,0 +1,33 @@
+# @Author: hardy
+# @Date:   2019-12-03 16:45:19
+# @Last Modified by:   hardy
+# @Last Modified time: 2019-12-10 10:56:12
+version: '3'
+services:
+  zookeeper:
+    container_name: boonray-zookeeper-1
+    image: wurstmeister/zookeeper
+    restart: always
+    ports: 
+      - 2181:2181
+  kafka:
+    container_name: boonray-kafka-1
+    image: wurstmeister/kafka
+    restart: always
+    volumes: 
+      - ./localtime:/etc/localtime
+    ports:
+      - 9092:9092
+    environment: 
+      KAFKA_ADVERTISED_HOST_NAME: 192.168.1.11
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_CREATE_TOPICS: "hardy_test1:1:1,hardy_test2:1:1"
+  kafka-manager:
+    container_name: boonray-kafka-manager-1
+    image: sheepkiller/kafka-manager
+    restart: always
+    environment: 
+      ZK_HOSTS: zookeeper:2181
+    ports: 
+      - 9000:9000
+

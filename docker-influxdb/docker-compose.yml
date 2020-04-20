@@ -1,0 +1,17 @@
+version: "3"
+services:
+  influxdb:
+    container_name: loncol_influxdb_1
+    image: tutum/influxdb:0.9
+    ports:
+      - 8086:8086
+      - 8083:8083
+    restart: always
+    logging: 
+      driver: "json-file"
+      options:
+        max-size: "10m"
+    volumes:
+      - ./data:/var/lib/influxdb
+    environment:
+      PRE_CREATE_DB: "test1"

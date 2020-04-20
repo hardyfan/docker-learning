@@ -1,0 +1,54 @@
+# @Author: hardy
+# @Date:   2019-11-14 09:23:14
+# @Last Modified by:   hardy
+# @Last Modified time: 2019-11-15 17:18:57
+version: '3.1'
+services: 
+  influxdb: 
+    container_name: monitor-influxdb-1 
+    image: tutum/influxdb:0.9
+    restart: always
+    environment:
+      - PRE_CREATE_DB=cadvisor
+    ports: 
+      - "8083:8083"
+      - "8086:8086"
+    expose: 
+      - "8090"
+      - "8099"
+    volumes:
+      - ./data/influxdb:/data
+
+  cadvisor:
+    container_name: monitor-cadvisor-1
+    image: google/cadvisor
+    links: 
+      - influxdb:influxsrv
+    command: -storage_driver=influxdb -storage_driver_db=cadvisor -storage_driver_host=influxsrv:8086
+    restart: always
+    ports: 
+      - "8080:8080"
+    volumes: 
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+
+  grafana:
+    container_name: monitor-grafana-1
+    image: grafana/grafana
+    restart: always
+    links: 
+      - influxdb:influxsrv
+    ports: 
+      - "3000:3000"
+    # volumes:
+    #   - ./data/grafana:/var/lib/grafana
+    environment: 
+      - HTTP_USER=admin
+      - HTTP_PASS=admin
+      - INFLUXDB_HOST=influxsrv
+      - INFLUXDB_PORT=8086
+      - INFLUXDB_NAME=cadvisor
+      - INFLUXDB_USER=root
+      - INFLUXDB_PASS=root

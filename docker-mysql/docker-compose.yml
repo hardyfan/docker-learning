@@ -1,0 +1,19 @@
+# @Author: hardy
+# @Date:   2019-11-07 11:45:01
+# @Last Modified by:   hardy
+# @Last Modified time: 2019-11-13 10:05:47
+version: '3'
+
+services:
+  db:
+    image: mysql:5.7
+    restart: always
+    volumes:
+      - /data:/var/lib/mysql
+      - ./conf/custom.cnf:/etc/mysql/conf.d/custom.cnf
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: db_spic
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: mysql

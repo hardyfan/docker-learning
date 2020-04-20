@@ -1,0 +1,13 @@
+version: '3.1'
+services:
+  mq:
+    container_name: loncol_rabbitmq_1
+    image: 'rabbitmq:management'
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=hardy
+      - RABBITMQ_DEFAULT_PASS=518598
+    

@@ -1,0 +1,19 @@
+# @Author: hardy
+# @Date:   2019-11-07 11:44:20
+# @Last Modified by:   hardy
+# @Last Modified time: 2019-11-07 18:30:41
+version: '3'
+services: 
+  mongo:
+    container_name: loncol_mongo_1
+    image:  mongo:3.4
+    restart: always
+    environment: 
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=518598
+    ports: 
+      - 27017:27017
+    volumes: 
+      - ~/data/db:/data/db
+      - ~/data/entry/:/docker-entrypoint-initdb.d/
+    command: mongod

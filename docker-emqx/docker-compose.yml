@@ -1,0 +1,16 @@
+# @Author: hardy
+# @Date:   2019-12-04 10:55:05
+# @Last Modified by:   hardy
+# @Last Modified time: 2019-12-04 10:59:12
+version: "3"
+services:
+  emqx:
+    container_name: loncol_emqx_1
+    image: emqx/emqx:v3.1.0
+    ports:
+      - 1883:1883
+      - 8082:8083
+      - 8883:8883
+      - 8084:8084
+      - 18083:18083
+    restart: always

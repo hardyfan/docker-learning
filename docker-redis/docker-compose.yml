@@ -1,0 +1,17 @@
+# @Author: hardy
+# @Date:   2019-11-06 13:49:17
+# @Last Modified by:   hardy
+# @Last Modified time: 2019-11-06 13:49:17
+version: '3'
+services:
+  redis:
+    container_name: loncol-redis-1
+    image: redis:4.0.8-alpine
+    restart: always
+    ports:
+      - 6379:6379
+    volumes:
+      - ./redis/config:/docker/config
+      - ./redis/data:/data
+    command: redis-server /docker/config/redis.conf
+
